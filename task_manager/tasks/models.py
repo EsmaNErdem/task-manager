@@ -10,8 +10,16 @@ class Task(models.Model):
     # taskOwner = models.ForeignKey(User, on_delete=models.CASCADE)
     taskName = models.CharField(max_length=100, default='task')
     dueDate = models.DateField()
-    priority = models.CharField(choices=PRIORITY_CHOICES, default=1)
+    priority = models.IntegerField(choices=PRIORITY_CHOICES, default=1)
 
+    def serialize(self):
+        return {
+            "primary_key": self.pk,
+            "taskName": self.taskName,
+            "dueDate": self.dueDate, 
+            "priority": self.priority
+        }
+    
     def __str__(self):
         """String representation of table column"""
 

@@ -1,8 +1,16 @@
 from django.http import JsonResponse
+from .models import Task
 
 def list_tasks(request):
-    data = {
-        'task1': 'value1'
-    }
-    # Return a JSON response with a custom status code
-    return JsonResponse(data, status=200)
+    # Retrieve all tasks from the database
+    tasks = Task.objects.all()
+
+    # Return a JSON response with the formatted data
+    return JsonResponse([task.serialize() for task in tasks], status=200)
+
+
+def task_detail(request, task_id):
+    # retrieve task with given pk
+    task = Task.objects.get(pk=task_id)
+    
+    return JsonResponse(task.serialize(), status=200)
