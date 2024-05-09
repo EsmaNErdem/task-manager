@@ -24,3 +24,20 @@ class Task(models.Model):
         """String representation of table column"""
 
         return f"{self.taskName}, due by {self.dueDate} with {self.priority} priority"
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        """String representation of table column"""
+
+        return f"Category: {self.name}"
+    
+class TaskCategory(models.Model):
+    taskName = models.ForeignKey(Task, on_delete=models.CASCADE)
+    taskCategory = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """String representation of table column"""
+
+        return f"Category: {self.taskCategory}, Task: {self.taskName}"
